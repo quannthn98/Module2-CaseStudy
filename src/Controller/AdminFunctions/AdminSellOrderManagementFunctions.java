@@ -1,6 +1,6 @@
 package Controller.AdminFunctions;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Controller.SellOrderManagement;
 import Model.Account.Account;
 import Model.SellOrder;

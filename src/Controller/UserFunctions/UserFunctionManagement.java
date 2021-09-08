@@ -1,6 +1,6 @@
 package Controller.UserFunctions;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Controller.DataHandler.AccountDataHandler;
 import Controller.TransactionManagement;
 import Controller.Monster.Factory.MonsterFactory;

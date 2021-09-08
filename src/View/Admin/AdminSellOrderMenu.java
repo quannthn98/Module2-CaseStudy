@@ -1,8 +1,6 @@
 package View.Admin;
 
-import Controller.Account.AccountManagement;
 import Controller.AdminFunctions.AdminSellOrderManagementFunctions;
-import Controller.SellOrderManagement;
 
 import java.util.Scanner;
 

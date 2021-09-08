@@ -1,4 +1,4 @@
-package Controller.Account;
+package Controller;
 
 import Controller.DataHandler.AccountDataHandler;
 import Model.Account.Account;

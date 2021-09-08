@@ -1,6 +1,6 @@
 package Controller.DataHandler;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Model.Account.Account;
 
 import java.io.*;

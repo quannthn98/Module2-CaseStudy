@@ -1,4 +1,4 @@
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import View.User.GuestMenu;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package Controller.AdminFunctions;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Controller.TransactionManagement;
 import View.Admin.AdminMainMenu;
 import View.Admin.AdminTransactionMenu;

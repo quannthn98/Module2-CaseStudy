@@ -1,6 +1,6 @@
 package Controller.Monster;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Model.Account.Account;
 import Model.Monster.MonsterTypes.Monster;
 

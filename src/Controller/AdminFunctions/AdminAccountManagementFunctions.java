@@ -1,6 +1,6 @@
 package Controller.AdminFunctions;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Controller.DataHandler.AccountDataHandler;
 import Controller.Tools.AccountValidator;
 import Model.Account.Account;

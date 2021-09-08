@@ -1,6 +1,6 @@
 package Controller.Tools;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Model.Account.Account;
 
 import java.util.List;

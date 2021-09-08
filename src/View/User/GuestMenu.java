@@ -1,6 +1,6 @@
 package View.User;
 
-import Controller.Account.AccountManagement;
+import Controller.AccountManagement;
 import Model.Account.Account;
 import Controller.Tools.AccountValidator;
 import View.Admin.AdminMainMenu;
