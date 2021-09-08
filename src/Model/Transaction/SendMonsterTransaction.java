@@ -32,7 +32,7 @@ public class SendMonsterTransaction extends Transaction {
 
     @Override
     public String toString() {
-        return "Send Monster Transaction: " + super.toString() +
+        return "Send Monster: " + super.toString() +
                 "; Monster:" + monster;
     }
 }

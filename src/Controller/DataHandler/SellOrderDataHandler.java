@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SellOrderDataHandler{
-    private final static String filePath ="/Users/quans/Desktop/module2/CaseStudyM2/src/Server/sellOrderList.txt";
+    private final static String filePath ="src/Data/sellOrderList.txt";
     public static void writeToFile() {
         try {
             List<SellOrder> sellOrderList = SellOrderManagement.getSellOrderList();

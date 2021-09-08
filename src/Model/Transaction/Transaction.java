@@ -57,7 +57,7 @@ abstract public class Transaction  implements Serializable {
 
     @Override
     public String toString() {
-        return  "transaction Id: " + id + " fromAccount: " + fromAccount.getUsername() +
-                "- toAccount: " + toAccount.getUsername();
+        return  "tx Id: " + id + "; fromAccount: " + fromAccount.getUsername() +
+                " - toAccount: " + toAccount.getUsername() + "; ";
     }
 }

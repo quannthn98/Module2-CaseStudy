@@ -23,7 +23,7 @@ public class SendMoneyTransaction extends Transaction {
 
     @Override
     public String toString() {
-        return "Send Money Transaction: " +
+        return "Send Money: " +
                 super.toString() +
                 "; amount: " + amount + " coins";
     }

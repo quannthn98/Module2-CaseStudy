@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.*;
 
 public class AccountValidator {
+    private AccountManagement accountManagement = AccountManagement.getAccountManager();
     private String USERNAMEREGEX = "^[a-zA-Z0-9]{4,8}$";
 
     public AccountValidator() {
@@ -25,13 +26,9 @@ public class AccountValidator {
 
     public boolean isDuplicated(String username){
         boolean isDuplicated = false;
-        List<Account> accountList = AccountManagement.getAccountManager().getAccountList();
-        for (Account account: accountList){
-            if (username.equals(account.getUsername())){
-                System.out.println("Username has already existed, please input another username");
-                isDuplicated = true;
-                break;
-            }
+        if (accountManagement.isAccountExist(username)){
+            System.out.println("Username has already existed, please input another username");
+            isDuplicated = true;
         }
         return isDuplicated;
     }

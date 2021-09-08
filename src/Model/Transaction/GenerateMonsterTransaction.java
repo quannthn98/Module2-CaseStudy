@@ -25,8 +25,9 @@ public class GenerateMonsterTransaction extends Transaction {
 
     @Override
     public String toString() {
-        return "Generate Monster Transaction: " +
-                "creator: " + getFromAccount().getUsername() +
-                ", newMonster: " + newMonster;
+        return "Generate Monster: " +
+                "tx Id: " + this.getId() +
+                "; creator: " + getFromAccount().getUsername() +
+                "; newMonster: " + newMonster;
     }
 }

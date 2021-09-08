@@ -18,7 +18,7 @@ public class SystemInputOnRun {
 
         importSellOrderData();
 
-        importMonsterData();
+        importMosterData();
 
         importTransactionData();
 
@@ -30,7 +30,7 @@ public class SystemInputOnRun {
         Transaction.count = transactionList.size();
     }
 
-    private static void importMonsterData() {
+    private static void importMosterData() {
         MonsterManagement.getMonsterListOnRun();
         Monster.count = monsterManagement.getMonsterList().size();
     }

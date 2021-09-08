@@ -31,7 +31,7 @@ public class BuyMonsterTransaction extends Transaction {
 
     @Override
     public String toString() {
-        return "BuyMonsterTransaction: " + super.toString() +
+        return "Buy Monster: " + super.toString() +
                 " Sell order: " + sellOrder;
     }
 }

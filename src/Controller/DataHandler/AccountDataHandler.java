@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDataHandler{
-    private final static String filePath = "/Users/quans/Desktop/module2/CaseStudyM2/src/Server/accountList.txt";
+    private final static String filePath = "src/Data/accountList.txt";
 
     public static void writeToFile() {
         try {

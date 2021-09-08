@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDataHandler {
-    private final static String filePath = "/Users/quans/Desktop/module2/CaseStudyM2/src/Server/transactionList.txt";
+    private final static String filePath = "src/Data/transactionList.txt";
 
     public static void writeToFile() {
         try {
