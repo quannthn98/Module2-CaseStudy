@@ -3,7 +3,7 @@ package View.User;
 import Controller.Account.AccountManagement;
 import Model.Account.Account;
 import Controller.Tools.AccountValidator;
-import View.Admin.AdminMenu;
+import View.Admin.AdminMainMenu;
 
 import java.util.Scanner;
 
@@ -48,7 +48,7 @@ public class GuestMenu {
             System.out.println("Username or password invalid, please try again");
         } else {
             if (account.getUsername().equals("admin")){
-                AdminMenu adminMenu = new AdminMenu();
+                AdminMainMenu adminMenu = new AdminMainMenu();
                 adminMenu.run();
             } else {
                 UserMenu userMenu = new UserMenu(account);

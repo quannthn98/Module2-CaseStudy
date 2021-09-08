@@ -62,9 +62,9 @@ public class UserMenu {
         System.out.println("----------------------------");
         System.out.println("User: " + thisAccount.getUsername());
         System.out.println("-----------MENU-------------");
-        System.out.println("1. Check balance");
-        System.out.println("2. Check Monster");
-        System.out.println("3. Get new Monster");
+        System.out.println("1. Show balance");
+        System.out.println("2. Show Monster");
+        System.out.println("3. Create new Monster");
         System.out.println("4. Battle");
         System.out.println("5. Marketplace");
         System.out.println("6. Send money");

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account implements Serializable {
+public class Account implements Serializable, Comparable<Account>{
     private String username, password;
     private int balance;
     private List<Monster> monsterList;
@@ -58,5 +58,10 @@ public class Account implements Serializable {
                 ", balance=" + balance +
                 ", monsterList=" + monsterList +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Account o) {
+        return o.getBalance() - this.balance;
     }
 }

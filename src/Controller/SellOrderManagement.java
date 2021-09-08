@@ -25,11 +25,14 @@ public class SellOrderManagement {
     }
 
     public void showAllSellOrder() {
-        System.out.println("----------------------------");
-        System.out.println("Sell order List:");
-        for (int i = 1; i <= sellOrderList.size(); i++) {
-            System.out.println(i + ". " + sellOrderList.get(i - 1));
-
+        if (sellOrderList.size() == 0) {
+            System.out.println("There is no sell order at the moment");
+        } else {
+            System.out.println("----------------------------");
+            System.out.println("Sell order List:");
+            for (int i = 0; i < sellOrderList.size(); i++) {
+                System.out.println((i + 1) + ". " + sellOrderList.get(i));
+            }
         }
     }
 
@@ -111,15 +114,14 @@ public class SellOrderManagement {
         SellOrderDataHandler.writeToFile();
     }
 
-    public void sortByPrice(){
+    public void sortByPrice() {
         Collections.sort(sellOrderList);
     }
 
-    public void removeAllSellOrder(){
+    public void removeAllSellOrder() {
         sellOrderList = new ArrayList<>();
+
     }
-
-
 
 
 }

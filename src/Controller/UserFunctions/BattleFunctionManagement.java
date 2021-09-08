@@ -44,28 +44,30 @@ public class BattleFunctionManagement {
         }
     }
 
+    public Creep getCreepForBattle(Monster chosenMonster) {
+        System.out.println("----------------------------");
+        System.out.println("Please pick 1 Creep to fight");
+
+        Creep chosenCreep;
+        creepManagement.showCreepForBattle(chosenMonster);
+        int index = scanner.nextInt();
+
+        while (index < 1 || index > creepManagement.getTotalNumberCreep()) {
+            System.out.println("----------------------------");
+            System.out.println("Please input valid Monster option");
+            index = scanner.nextInt();
+        }
+
+        chosenCreep = creepManagement.getCreepByIndex(index - 1);
+        return chosenCreep;
+    }
+
     public void distributeReward(Creep creep) {
         int reward = creep.getReward();
         account.setBalance(account.getBalance() + reward);
         AccountDataHandler.writeToFile();
     }
 
-    public Creep getCreepForBattle(Monster chosenMonster) {
-        System.out.println("----------------------------");
-        System.out.println("Please pick 1 Creep to fight");
-
-        Creep chosenCreep;
-        creepManagement.showCreepForFight(chosenMonster);
-        int index = scanner.nextInt();
-        while (index < 1 || index > creepManagement.getTotalNumberCreep()) {
-            System.out.println("----------------------------");
-            System.out.println("Please input valid Monster option");
-
-            index = scanner.nextInt();
-        }
-        chosenCreep = creepManagement.getCreepsList().get(index - 1);
-        return chosenCreep;
-    }
 
 
 }

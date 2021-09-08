@@ -29,17 +29,16 @@ public class CreepManagement {
         return creepsList;
     }
 
-    public void showCreepForFight(){
-        for (int i = 1; i <= creepsList.size(); i++) {
-            System.out.println((i) + "" + creepsList.get(i-1));
-        }
-    }
-
     public int getTotalNumberCreep(){
         return creepsList.size();
     }
 
-    public void showCreepForFight(Monster monster) {
+    public Creep getCreepByIndex(int index){
+        Creep chosenCreep = creepsList.get(index);
+        return chosenCreep;
+    }
+
+    public void showCreepForBattle(Monster monster) {
         CreepManagement creepManagement = CreepManagement.getInstance();
         List<Creep> creeps = creepManagement.getCreepsList();
         int index = 1;

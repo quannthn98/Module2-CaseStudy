@@ -10,13 +10,14 @@ public class AccountManagement {
 
     private static final AccountManagement accountManager = new AccountManagement();
 
-    private AccountManagement(){};
+    private AccountManagement() {
+    }
 
     public static void setAccountList(List<Account> accountList) {
         AccountManagement.accountList = accountList;
     }
 
-    public static AccountManagement getAccountManager(){
+    public static AccountManagement getAccountManager() {
         return accountManager;
     }
 
@@ -24,46 +25,55 @@ public class AccountManagement {
         return accountList;
     }
 
-    public void showAccountList(){
-        for (Account account: accountList){
+    public void showAccountList() {
+        for (Account account : accountList) {
             System.out.println(account);
         }
     }
 
-    public void addNewAccount(Account account){
+    public void addNewAccount(Account account) {
         accountList.add(account);
         AccountDataHandler.writeToFile();
     }
 
-    public Account login(String username, String password){
-        for (Account account: accountList){
-            if (username.equals(account.getUsername()) && password.equals(account.getPassword())){
+    public Account login(String username, String password) {
+        for (Account account : accountList) {
+            if (username.equals(account.getUsername()) && password.equals(account.getPassword())) {
                 return account;
             }
         }
         return null;
     }
 
-    public int findAccountByUsername(String username){
+    public int getAccountIndexByUsername(String username) {
         int index = -1;
         for (int i = 0; i < accountList.size(); i++) {
-            if (username.equals(accountList.get(i).getUsername())){
+            if (username.equals(accountList.get(i).getUsername())) {
                 index = i;
             }
         }
         return index;
     }
 
-    public boolean isAccountExist(String username){
+    public Account getAccountByIndex(int index){
+        return accountList.get(index);
+    }
+
+    public Account getAccountByUsername(String username){
+        int index = getAccountIndexByUsername(username);
+        return accountList.get(index);
+    }
+
+    public boolean isAccountExist(String username) {
         boolean isExist = false;
-        int index = findAccountByUsername(username);
-        if (index != -1){
+        int index = getAccountIndexByUsername(username);
+        if (index != -1) {
             isExist = true;
         }
         return isExist;
     }
 
-    public void removeAccount(int index){
+    public void removeAccount(int index) {
         accountList.remove(index);
         AccountDataHandler.writeToFile();
     }

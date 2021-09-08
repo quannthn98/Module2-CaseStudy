@@ -7,10 +7,7 @@ import View.User.GuestMenu;
 
 import java.util.Scanner;
 
-public class AdminMenu {
-    private AccountManagement accountManager = AccountManagement.getAccountManager();
-    private MonsterManagement monsterManager = new MonsterManagement();
-    public static AccountValidator validator = new AccountValidator();
+public class AdminMainMenu {
     public static Scanner scanner = new Scanner(System.in);
 
     public void run() {
@@ -19,6 +16,7 @@ public class AdminMenu {
         AdminMonsterMenu adminMonsterMenu = new AdminMonsterMenu();
         AdminTransactionMenu adminTransactionMenu = new AdminTransactionMenu();
         AdminSellOrderMenu adminSellOrderMenu = new AdminSellOrderMenu();
+        GuestMenu guestMenu = new GuestMenu();
         do {
             menu();
             option = scanner.nextInt();
@@ -37,7 +35,6 @@ public class AdminMenu {
                     adminSellOrderMenu.run();
                     break;
                 case 0:
-                    GuestMenu guestMenu = new GuestMenu();
                     guestMenu.run();
                     break;
             }

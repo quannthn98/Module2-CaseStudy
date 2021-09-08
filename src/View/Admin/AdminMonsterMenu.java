@@ -1,14 +1,12 @@
 package View.Admin;
 
-import Controller.Monster.MonsterManagement;
-import Model.Monster.MonsterTypes.Monster;
-import View.Admin.AdminMenu;
+import Controller.AdminFunctions.AdminMonsterManagementFunctions;
 
 import java.util.Scanner;
 
 public class AdminMonsterMenu {
     public static Scanner scanner = new Scanner(System.in);
-    private MonsterManagement monsterManager = new MonsterManagement();
+    AdminMonsterManagementFunctions adminMonsterManagementFunctions = new AdminMonsterManagementFunctions();
 
     public void run() {
         int option;
@@ -18,54 +16,22 @@ public class AdminMonsterMenu {
             scanner.nextLine();
             switch (option) {
                 case 1:
-                    monsterManager.updateMonsterList();
-                    monsterManager.showMonsterList();
+                    adminMonsterManagementFunctions.showMonsterList();
                     break;
                 case 2:
-                    monsterManager.sortByPower();
-                    monsterManager.showMonsterList();
+                    adminMonsterManagementFunctions.sortByPower();
                     break;
                 case 3:
-                    findMonsterById();
+                    adminMonsterManagementFunctions.findMonsterById();
                     break;
                 case 4:
-                    removeMonsterById();
+                    adminMonsterManagementFunctions.removeMonsterById();
                     break;
                 case 0:
-                    AdminMenu adminMenu = new AdminMenu();
-                    adminMenu.run();
+                    adminMonsterManagementFunctions.openMainMenu();
                     break;
             }
         } while (option != 0);
-    }
-
-    private void removeMonsterById() {
-        int id;
-        int index;
-        System.out.println("Please input id you want to find");
-        id = scanner.nextInt();
-        index = monsterManager.findMonsterById(id);
-        if (index == -1) {
-            System.out.println("Can not found this Monster, please try again");
-        } else {
-            System.out.println("Remove monster successfully");
-            monsterManager.removeMonsterById(id);
-        }
-    }
-
-    private void findMonsterById() {
-        int id;
-        int index;
-        System.out.println("Please input id you want to find");
-        id = scanner.nextInt();
-        index = monsterManager.findMonsterById(id);
-        if (index == -1) {
-            System.out.println("Can not found this Monster, please try again");
-        } else {
-            Monster monster = monsterManager.getMonsterList().get(index);
-            System.out.println("Found this monster");
-            System.out.println(monster);
-        }
     }
 
     public void monsterMenu() {

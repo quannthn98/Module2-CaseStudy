@@ -28,47 +28,47 @@ public class TransactionManagement {
     }
 
     public void showAllTransaction() {
-        for (int i = 1; i <= transactionList.size(); i++) {
-            System.out.println(i + ". " + transactionList.get(i - 1));
+        for (int i = 0; i < transactionList.size(); i++) {
+            System.out.println((i + 1) +  ". " + transactionList.get(i));
         }
     }
 
     public void showSendMoneyTransaction() {
         int count = 0;
-        for (int i = 1; i <= transactionList.size(); i++) {
-            if (transactionList.get(i - 1) instanceof SendMoneyTransaction) {
-                System.out.println(++count + ". " + transactionList.get(i - 1));
+        for (int i = 0; i < transactionList.size(); i++) {
+            if (transactionList.get(i) instanceof SendMoneyTransaction) {
+                System.out.println(++count + ". " + transactionList.get(i));
             }
         }
     }
 
     public void showSendMonsterTransaction() {
         int count = 0;
-        for (int i = 1; i <= transactionList.size(); i++) {
-            if (transactionList.get(i - 1) instanceof SendMonsterTransaction) {
-                System.out.println(++count + ". " + transactionList.get(i - 1));
+        for (int i = 0; i < transactionList.size(); i++) {
+            if (transactionList.get(i) instanceof SendMonsterTransaction) {
+                System.out.println(++count + ". " + transactionList.get(i));
             }
         }
     }
 
     public void showBuyMonsterTransaction() {
         int count = 0;
-        for (int i = 1; i <= transactionList.size(); i++) {
-            if (transactionList.get(i - 1) instanceof BuyMonsterTransaction) {
-                System.out.println(++count + ". " + transactionList.get(i - 1));
+        for (int i = 0; i < transactionList.size(); i++) {
+            if (transactionList.get(i) instanceof BuyMonsterTransaction) {
+                System.out.println(++count + ". " + transactionList.get(i));
             }
         }
     }
     public void showGenerateMonsterTransaction() {
         int count = 0;
-        for (int i = 1; i <= transactionList.size(); i++) {
-            if (transactionList.get(i - 1) instanceof GenerateMonsterTransaction) {
-                System.out.println(++count + ". " + transactionList.get(i - 1));
+        for (int i = 0; i < transactionList.size(); i++) {
+            if (transactionList.get(i) instanceof GenerateMonsterTransaction) {
+                System.out.println(++count + ". " + transactionList.get(i));
             }
         }
     }
 
-    public Transaction findTransactionById(int id) {
+    public Transaction getTransactionById(int id) {
         for (Transaction transaction : transactionList) {
             if (id == transaction.getId()) {
                 return transaction;
@@ -77,7 +77,7 @@ public class TransactionManagement {
         return null;
     }
 
-    public List<Transaction> getTransactionByUsername(String username) throws NullPointerException{
+    public List<Transaction> getTransactionListByUsername(String username) throws NullPointerException{
         List<Transaction> transactionList = new ArrayList<>();
         for (Transaction transaction : getTransactionList()) {
             try {
@@ -89,19 +89,10 @@ public class TransactionManagement {
         return transactionList;
     }
 
-    public void showTransactionByAccount(Account account) throws NullPointerException{
-        int count = 0;
-        System.out.println("----------------------------");
-            for (Transaction transaction : getTransactionList()) {
-                try {
-                    if (transaction.getFromAccount().getUsername().equals(account.getUsername()) || transaction.getToAccount().getUsername().equals(account.getUsername())) {
-                        System.out.println(++count + ". " + transaction);
-                    }
-                } catch (NullPointerException e){}
-            }
-
-        if (count == 0){
-            System.out.println("You dont have any transaction");
+    public void showTransactionByAccount(String username){
+        List<Transaction> transactionList = getTransactionListByUsername(username);
+        for (int i = 0; i < transactionList.size(); i++) {
+            System.out.println((i + 1) + ". " + transactionList.get(i));
         }
     }
 }

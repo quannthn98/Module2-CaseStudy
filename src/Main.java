@@ -1,11 +1,4 @@
 import Controller.Account.AccountManagement;
-import Controller.Monster.Factory.MonsterFactory;
-import Controller.Tools.RandomNumberGenerator;
-import Model.Battle.Battle;
-import Model.Creep.Creep;
-import Model.Creep.DarkLord;
-import Model.Creep.Minion;
-import Model.Monster.MonsterTypes.Monster;
 import View.User.GuestMenu;
 
 import java.io.IOException;
@@ -16,6 +9,5 @@ public class Main {
         AccountManagement.getAccountManager().showAccountList();
         GuestMenu guestMenu = new GuestMenu();
         guestMenu.run();
-
     }
 }
