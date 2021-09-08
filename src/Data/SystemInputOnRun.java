@@ -14,19 +14,35 @@ public class SystemInputOnRun {
     private static MonsterManagement monsterManagement = new MonsterManagement();
 
     public static void getData() {
-        List<Account> accountList = AccountDataHandler.readDataFromFile();
-        AccountManagement.setAccountList(accountList);
+        importAccountData();
 
-        List<SellOrder> sellOrderList = SellOrderDataHandler.readDataFromFile();
-        SellOrderManagement.setSellOrderList(sellOrderList);
-        SellOrder.count = sellOrderList.size();
+        importSellOrderData();
 
-        MonsterManagement.getMonsterListOnRun();
-        Monster.count = monsterManagement.getMonsterList().size();
+        importMosterData();
 
+        importTransactionData();
+
+    }
+
+    private static void importTransactionData() {
         List<Transaction> transactionList = TransactionDataHandler.readDataFromFile();
         TransactionManagement.setTransactionList(transactionList);
         Transaction.count = transactionList.size();
+    }
 
+    private static void importMosterData() {
+        MonsterManagement.getMonsterListOnRun();
+        Monster.count = monsterManagement.getMonsterList().size();
+    }
+
+    private static void importSellOrderData() {
+        List<SellOrder> sellOrderList = SellOrderDataHandler.readDataFromFile();
+        SellOrderManagement.setSellOrderList(sellOrderList);
+        SellOrder.count = sellOrderList.size();
+    }
+
+    private static void importAccountData() {
+        List<Account> accountList = AccountDataHandler.readDataFromFile();
+        AccountManagement.setAccountList(accountList);
     }
 }
