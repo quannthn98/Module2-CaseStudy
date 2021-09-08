@@ -34,10 +34,12 @@ public class BattleFunctionManagement {
             distributeReward(chosenCreep);
 
             System.out.println("----------------------------");
+            System.out.println("----------VICTORY-----------");
             System.out.println("Your monster had defeated the creep, you are rewarded " + reward + " coins");
 
         } else {
             System.out.println("----------------------------");
+            System.out.println("----------DEFEATED----------");
             System.out.println("Your monster had been defeated, try next time");
         }
     }
@@ -51,7 +53,6 @@ public class BattleFunctionManagement {
     public Creep getCreepForBattle(Monster chosenMonster) {
         System.out.println("----------------------------");
         System.out.println("Please pick 1 Creep to fight");
-        System.out.println("----------------------------");
 
         Creep chosenCreep;
         creepManagement.showCreepForFight(chosenMonster);
@@ -59,7 +60,6 @@ public class BattleFunctionManagement {
         while (index < 1 || index > creepManagement.getTotalNumberCreep()) {
             System.out.println("----------------------------");
             System.out.println("Please input valid Monster option");
-            System.out.println("----------------------------");
 
             index = scanner.nextInt();
         }

@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class UserMenu {
     private UserFunctionManagement userFunctionManagement;
-    private TransactionManagement transactionManagement = new TransactionManagement();
     private Account thisAccount;
     public static Scanner scanner = new Scanner(System.in);
 

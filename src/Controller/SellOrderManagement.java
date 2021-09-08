@@ -5,6 +5,7 @@ import Model.Account.Account;
 import Model.SellOrder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SellOrderManagement {
@@ -25,10 +26,6 @@ public class SellOrderManagement {
 
     public void showAllSellOrder() {
         System.out.println("----------------------------");
-        if (sellOrderList.size() == 0){
-            System.out.println("There is no Sell order at the moment");
-            return;
-        }
         System.out.println("Sell order List:");
         for (int i = 1; i <= sellOrderList.size(); i++) {
             System.out.println(i + ". " + sellOrderList.get(i - 1));
@@ -43,16 +40,16 @@ public class SellOrderManagement {
                 accountSellOrder.add(sellOrderList.get(i));
             }
         }
-        if (accountSellOrder.size() == 0){
+        if (accountSellOrder.size() == 0) {
             System.out.println("You dont have any order");
         }
         return accountSellOrder;
     }
 
-    public void showSellOrderByAccount(Account account){
+    public void showSellOrderByAccount(Account account) {
         int count = 0;
         List<SellOrder> accountSellOrder = getSellOrderByAccount(account);
-        if (accountSellOrder.size() == 0){
+        if (accountSellOrder.size() == 0) {
             return;
         } else {
             System.out.println("----------------------------");
@@ -68,7 +65,15 @@ public class SellOrderManagement {
         SellOrderDataHandler.writeToFile();
     }
 
-    public boolean isHavingSellOrder(Account account){
+    public boolean isHavingSellOrder() {
+        boolean isHavingSellOrder = false;
+        if (sellOrderList.size() > 0) {
+            isHavingSellOrder = true;
+        }
+        return isHavingSellOrder;
+    }
+
+    public boolean isHavingSellOrder(Account account) {
         boolean isHavingSellOrder = false;
         for (int i = 1; i <= sellOrderList.size(); i++) {
             if (account.getUsername().equals(sellOrderList.get(i - 1).getSeller().getUsername())) {
@@ -96,16 +101,25 @@ public class SellOrderManagement {
             System.out.println("Can not found this order");
         } else {
             System.out.println("Remove order successfully");
-            ;
             sellOrderList.remove(index);
         }
         SellOrderDataHandler.writeToFile();
     }
 
-    public void removeOrderByObject(SellOrder sellOrder){
+    public void removeOrderByObject(SellOrder sellOrder) {
         sellOrderList.remove(sellOrder);
         SellOrderDataHandler.writeToFile();
     }
+
+    public void sortByPrice(){
+        Collections.sort(sellOrderList);
+    }
+
+    public void removeAllSellOrder(){
+        sellOrderList = new ArrayList<>();
+    }
+
+
 
 
 }

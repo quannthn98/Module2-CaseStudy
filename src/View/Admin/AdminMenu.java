@@ -18,6 +18,7 @@ public class AdminMenu {
         AdminAccountMenu adminAccountMenu = new AdminAccountMenu();
         AdminMonsterMenu adminMonsterMenu = new AdminMonsterMenu();
         AdminTransactionMenu adminTransactionMenu = new AdminTransactionMenu();
+        AdminSellOrderMenu adminSellOrderMenu = new AdminSellOrderMenu();
         do {
             menu();
             option = scanner.nextInt();
@@ -32,6 +33,9 @@ public class AdminMenu {
                 case 3:
                     adminTransactionMenu.run();
                     break;
+                case 4:
+                    adminSellOrderMenu.run();
+                    break;
                 case 0:
                     GuestMenu guestMenu = new GuestMenu();
                     guestMenu.run();
@@ -44,6 +48,7 @@ public class AdminMenu {
         System.out.println("1. Account Management");
         System.out.println("2. Monster Management");
         System.out.println("3. Transaction Management");
+        System.out.println("4. Sell order Management");
         System.out.println("0. Logout");
     }
 }

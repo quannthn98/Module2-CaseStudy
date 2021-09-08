@@ -23,36 +23,40 @@ public class MarketFunctionManagement {
     }
 
     public void buyMonster(Account account) {
-        sellOrderManagement.showAllSellOrder();
         System.out.println("----------------------------");
-        System.out.println("Please choose 1 order to buy");
-
-        int buyOrderIndex = scanner.nextInt();
-        while (buyOrderIndex < 1 || buyOrderIndex > SellOrderManagement.getSellOrderList().size()){
-            System.out.println("Please input valid option");
-            buyOrderIndex = scanner.nextInt();
-        }
-
-        SellOrder chosenSellOrder = SellOrderManagement.getSellOrderList().get(buyOrderIndex - 1);
-        if (chosenSellOrder.getSeller().getUsername().equals(account.getUsername())){
-            System.out.println("----------------------------");
-            System.out.println("You can not purchase your own Order");
-            return;
-        }
-        System.out.println("----------------------------");
-        if (account.getBalance() < chosenSellOrder.getPrice()){
-            System.out.println("Insufficient balance, please chose another order");
+        if (!sellOrderManagement.isHavingSellOrder()){
+            System.out.println("Marketplace has no Sell order at the moment");
         } else {
-            System.out.println("You had successfully purchased new Monster");
-            Account seller = chosenSellOrder.getSeller();
-            Account buyer = account;
+            sellOrderManagement.showAllSellOrder();
+            System.out.println("Please choose 1 order to buy");
 
-            Transaction buyMonsterTransaction = new BuyMonsterTransaction(buyer, seller, chosenSellOrder);
-            transactionManagement.newTransaction(buyMonsterTransaction);
-            buyMonsterTransaction.execute();
+            int buyOrderIndex = scanner.nextInt();
+            while (buyOrderIndex < 1 || buyOrderIndex > SellOrderManagement.getSellOrderList().size()) {
+                System.out.println("Please input valid option");
+                buyOrderIndex = scanner.nextInt();
+            }
 
-            sellOrderManagement.removeOrderByObject(chosenSellOrder);
+            SellOrder chosenSellOrder = SellOrderManagement.getSellOrderList().get(buyOrderIndex - 1);
+            if (chosenSellOrder.getSeller().getUsername().equals(account.getUsername())) {
+                System.out.println("----------------------------");
+                System.out.println("You can not purchase your own Order");
+                return;
+            }
+            System.out.println("----------------------------");
+            if (account.getBalance() < chosenSellOrder.getPrice()) {
+                System.out.println("Insufficient balance, please chose another order");
+            } else {
+                System.out.println("You had successfully purchased new Monster");
+                Account seller = chosenSellOrder.getSeller();
+                Account buyer = account;
 
+                Transaction buyMonsterTransaction = new BuyMonsterTransaction(buyer, seller, chosenSellOrder);
+                transactionManagement.newTransaction(buyMonsterTransaction);
+                buyMonsterTransaction.execute();
+
+                sellOrderManagement.removeOrderByObject(chosenSellOrder);
+
+            }
         }
     }
 
@@ -111,6 +115,7 @@ public class MarketFunctionManagement {
         } else {
             chosenSellOrder = getChosenSellOrderFromAccount(account);
             sellOrderManagement.removeOrderByObject(chosenSellOrder);
+            System.out.println("Remove order successfully");
         }
     }
 
@@ -122,6 +127,7 @@ public class MarketFunctionManagement {
             System.out.println("Please input new Price");
             int newPrice = scanner.nextInt();
             sellOrderManagement.setOrderPrice(chosenSellOrder, newPrice);
+            System.out.println("Set order price successfully");
         }
     }
 
@@ -141,7 +147,6 @@ public class MarketFunctionManagement {
             System.out.println("Please input valid option");
             mySellOrderIndex = scanner.nextInt();
         }
-        System.out.println("Remove Order successfully");
         SellOrder chosenSellOrder = mySellOrder.get(mySellOrderIndex - 1);
         return chosenSellOrder;
     }

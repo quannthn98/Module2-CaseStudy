@@ -7,7 +7,7 @@ import java.io.Serializable;
 abstract public class Monster implements Serializable, Comparable<Monster> {
     private BodyPart wing, horn, armor, pendant;
     private double power;
-    private static final int COST = 50;
+    private static final int COST = 100;
     public static int count;
     private int id;
 

@@ -9,6 +9,7 @@ import Model.Creep.Creep;
 import Model.Monster.MonsterTypes.Monster;
 import Model.Transaction.*;
 import View.User.MarketplaceMenu;
+import View.User.UserMenu;
 
 import java.util.List;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class UserFunctionManagement {
     private Account account;
 
     private static MonsterFactory monsterFactory = MonsterFactory.getInstance();
-    private static TransactionManagement transactionManagement= new TransactionManagement();
+    private static TransactionManagement transactionManagement = new TransactionManagement();
     private AccountManagement accountManagement = AccountManagement.getAccountManager();
 
     public static Scanner scanner = new Scanner(System.in);
@@ -42,18 +43,16 @@ public class UserFunctionManagement {
 
     public void showMonster() {
         System.out.println("----------------------------");
-        if (account.getMonsterList().size() == 0) {
-            System.out.println("You dont have any Monster");
-        } else {
-            System.out.println("Your Monster List:");
-            List<Monster> monsterList = account.getMonsterList();
-            for (int i = 1; i <= monsterList.size(); i++) {
-                System.out.println(i + ". " + monsterList.get(i - 1).toString());
-            }
+
+        System.out.println("Your Monster List:");
+        List<Monster> monsterList = account.getMonsterList();
+        for (int i = 1; i <= monsterList.size(); i++) {
+            System.out.println(i + ". " + monsterList.get(i - 1).toString());
         }
+
     }
 
-    public void showTransactionHistory(){
+    public void showTransactionHistory() {
         transactionManagement.showTransactionByAccount(account);
     }
 
@@ -66,7 +65,7 @@ public class UserFunctionManagement {
         if (account.getBalance() >= Monster.getCOST()) {
 
             Monster newMonster = monsterFactory.createNewMonster();
-            Transaction generateMonsterTransaction = new GenerateMonsterTransaction(account,null, newMonster);
+            Transaction generateMonsterTransaction = new GenerateMonsterTransaction(account, null, newMonster);
             generateMonsterTransaction.execute();
             transactionManagement.newTransaction(generateMonsterTransaction);
             AccountDataHandler.writeToFile();
@@ -110,7 +109,7 @@ public class UserFunctionManagement {
             Account fromAccount = account;
             Account toAccount = accountManagement.getAccountList().get(index);
 
-            if (toAccount.getUsername().equals(account.getUsername())){
+            if (toAccount.getUsername().equals(account.getUsername())) {
                 System.out.println("You can not send money to your self");
                 return;
             }
@@ -121,7 +120,7 @@ public class UserFunctionManagement {
             if (transferAmount > fromAccount.getBalance()) {
                 System.out.println("Insufficient balance, please try again");
             } else {
-                Transaction sendMoneyTransaction = new SendMoneyTransaction(fromAccount, toAccount,transferAmount);
+                Transaction sendMoneyTransaction = new SendMoneyTransaction(fromAccount, toAccount, transferAmount);
                 sendMoneyTransaction.execute();
                 transactionManagement.newTransaction(sendMoneyTransaction);
                 System.out.println("You sent " + transferAmount + " coins to account " + toAccount.getUsername());
@@ -130,30 +129,36 @@ public class UserFunctionManagement {
     }
 
     public Monster getMonsterFromYourList() {
+        Monster chosenMonster = null;
 
-        System.out.println("----------------------------");
-        System.out.println("Please pick 1 Monster from your List");
-        showMonster();
-
-        Monster chosenMonster;
-        int index = scanner.nextInt();
-        while (index < 1 || index > getTotalNumberMonster()) {
+        if (account.getMonsterList().size() == 0) {
             System.out.println("----------------------------");
-            System.out.println("Please input valid Monster option");
-            index = scanner.nextInt();
+            System.out.println("You dont have any monster");
+        } else {
+            showMonster();
+            System.out.println("----------------------------");
+            System.out.println("Please pick 1 Monster from your List");
+            int index = scanner.nextInt();
+            while (index < 1 || index > getTotalNumberMonster()) {
+                System.out.println("----------------------------");
+                System.out.println("Please input valid Monster option");
+                index = scanner.nextInt();
+            }
+            chosenMonster = getAccount().getMonsterList().get(index - 1);
         }
-        chosenMonster = getAccount().getMonsterList().get(index - 1);
         return chosenMonster;
     }
 
-    public void battle() {
+    public void battle() throws NullPointerException {
         BattleFunctionManagement battleFunctionManagement = new BattleFunctionManagement(account);
-
         Monster chosenMonster = getMonsterFromYourList();
+        if (chosenMonster == null) {
+            System.out.println("PLease get at least 1 monster to fight");
+            return;
+        }
         Creep chosenCreep = battleFunctionManagement.getCreepForBattle(chosenMonster);
 
         boolean battleResult = battleFunctionManagement.fight(chosenMonster, chosenCreep);
-
         battleFunctionManagement.finalizeBattle(chosenCreep, battleResult);
     }
 }

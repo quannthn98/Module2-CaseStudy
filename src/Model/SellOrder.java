@@ -5,12 +5,12 @@ import Model.Monster.MonsterTypes.Monster;
 
 import java.io.Serializable;
 
-public class SellOrder implements Serializable {
+public class SellOrder implements Serializable, Comparable<SellOrder> {
     private Monster monster;
     private Account seller;
     private int price;
     public static int count;
-    private int id;
+    private final int id;
     private boolean status;
 
     public SellOrder(Monster monster, Account seller, int price) {
@@ -49,6 +49,8 @@ public class SellOrder implements Serializable {
         this.price = price;
     }
 
+
+
     @Override
     public String toString() {
         return "Sell Order: " +
@@ -56,5 +58,10 @@ public class SellOrder implements Serializable {
                 ", price: " + price +
                 ", seller: " + seller.getUsername() +
                 ", monster: " + monster;
+    }
+
+    @Override
+    public int compareTo(SellOrder o) {
+        return o.price - this.price;
     }
 }
