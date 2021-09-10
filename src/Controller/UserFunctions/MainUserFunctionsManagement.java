@@ -40,10 +40,15 @@ public class MainUserFunctionsManagement {
     }
 
     public void showMonster() {
+        List<Monster> monsterList = account.getMonsterList();
+        if (monsterList.size()==0){
+            System.out.println("----------------------------");
+            System.out.println("You don't have any monster");
+            return;
+        }
         System.out.println("----------------------------");
         System.out.println("Your Monster List:");
 
-        List<Monster> monsterList = account.getMonsterList();
         for (int i = 1; i <= monsterList.size(); i++) {
             System.out.println(i + ". " + monsterList.get(i - 1).toString());
         }
@@ -65,6 +70,7 @@ public class MainUserFunctionsManagement {
         Monster chosenMonster = getMonsterFromYourList();
 
         if (chosenMonster == null) {
+            System.out.println("----------------------------");
             System.out.println("You must have at least 1 monster to fight");
             return;
         }
@@ -92,8 +98,10 @@ public class MainUserFunctionsManagement {
     }
 
     public void sendMonster() {
+
         int index = getAccountIndex();
         if (index == -1) {
+            System.out.println("----------------------------");
             System.out.println("Can not found this username");
         } else {
             Monster chosenMonster = getMonsterFromYourList();
@@ -104,6 +112,7 @@ public class MainUserFunctionsManagement {
             if (sellOrderContainMonsterIndex != -1) {
                 System.out.println("This monster is currently in your Sell order");
                 System.out.println("Do you want to remove this sell order to Send this monster?");
+                System.out.println("----------------------------");
                 System.out.println("Press Y to remove / N to cancel");
                 String option = scanner.nextLine();
                 switch (option) {
@@ -123,6 +132,8 @@ public class MainUserFunctionsManagement {
     }
 
     public void showTransactionHistory() {
+        System.out.println("----------------------------");
+        System.out.println("Your transactions History: ");
         transactionManagement.showTransactionByAccount(account.getUsername());
     }
 
@@ -145,6 +156,7 @@ public class MainUserFunctionsManagement {
     }
 
     private int getAccountIndex(){
+        System.out.println("----------------------------");
         System.out.println("Please input destination username");
         String username = scanner.nextLine();
         int index = accountManagement.getAccountIndexByUsername(username);

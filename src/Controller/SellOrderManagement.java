@@ -44,9 +44,9 @@ public class SellOrderManagement {
                 accountSellOrder.add(sellOrderList.get(i));
             }
         }
-        if (accountSellOrder.size() == 0) {
-            System.out.println("You dont have any order");
-        }
+//        if (accountSellOrder.size() == 0) {
+//            System.out.println("You dont have any order");
+//        }
         return accountSellOrder;
     }
 

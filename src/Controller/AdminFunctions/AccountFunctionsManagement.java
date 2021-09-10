@@ -113,6 +113,11 @@ public class AccountFunctionsManagement {
     private void removeSellOrderByDeleteMonster(Account chosenAccount) {
         List<Monster> accountMonsterList = chosenAccount.getMonsterList();
         List<SellOrder> accountSellOrderList = sellOrderManagement.getSellOrderListByAccount(chosenAccount);
+        if (accountMonsterList.size() == 0){
+
+            System.out.println("You dont have any sell orders");
+            return;
+        }
         for (Monster monster: accountMonsterList){
             for (SellOrder sellOrder:accountSellOrderList){
                 if (monster.getId() == sellOrder.getMonster().getId()){

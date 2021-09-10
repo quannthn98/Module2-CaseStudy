@@ -10,11 +10,12 @@ public class Account implements Serializable, Comparable<Account>{
     private String username, password;
     private int balance;
     private List<Monster> monsterList;
+    private final int initialBalance = 1000;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
-        this.balance = 500;
+        this.balance = initialBalance;
         this.monsterList = new ArrayList<>();
     }
 

@@ -7,13 +7,13 @@ import Model.Monster.MonsterTypes.Monster;
 import java.util.Scanner;
 
 public class UserMenu {
-    private MainUserFunctionsManagement userFunctionManagement;
+    private MainUserFunctionsManagement mainUserFunctionsManagement;
     private Account thisAccount;
     public static Scanner scanner = new Scanner(System.in);
 
     public UserMenu(Account account) {
         thisAccount = account;
-        userFunctionManagement = new MainUserFunctionsManagement(account);
+        mainUserFunctionsManagement = new MainUserFunctionsManagement(account);
     }
 
     public void run() {
@@ -30,28 +30,28 @@ public class UserMenu {
                     guestMenu.run();
                     break;
                 case 1:
-                    userFunctionManagement.showBalance();
+                    mainUserFunctionsManagement.showBalance();
                     break;
                 case 2:
-                    userFunctionManagement.showMonster();
+                    mainUserFunctionsManagement.showMonster();
                     break;
                 case 3:
-                    userFunctionManagement.createNewMonster();
+                    mainUserFunctionsManagement.createNewMonster();
                     break;
                 case 4:
-                    userFunctionManagement.battle();
+                    mainUserFunctionsManagement.battle();
                     break;
                 case 5:
-                    userFunctionManagement.openMarketplace();
+                    mainUserFunctionsManagement.openMarketplace();
                     break;
                 case 6:
-                    userFunctionManagement.sendMoney();
+                    mainUserFunctionsManagement.sendMoney();
                     break;
                 case 7:
-                    userFunctionManagement.sendMonster();
+                    mainUserFunctionsManagement.sendMonster();
                     break;
                 case 8:
-                    userFunctionManagement.showTransactionHistory();
+                    mainUserFunctionsManagement.showTransactionHistory();
                     break;
             }
 
