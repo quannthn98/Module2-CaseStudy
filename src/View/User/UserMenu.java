@@ -3,6 +3,7 @@ package View.User;
 import Controller.TransactionManagement;
 import Controller.UserFunctions.UserFunctionManagement;
 import Model.Account.Account;
+import Model.Monster.MonsterTypes.Monster;
 
 import java.util.Scanner;
 
@@ -54,9 +55,9 @@ public class UserMenu {
                     userFunctionManagement.showTransactionHistory();
                     break;
             }
+
         } while (option != 0);
     }
-
 
     public void menu() {
         System.out.println("----------------------------");
@@ -64,7 +65,7 @@ public class UserMenu {
         System.out.println("-----------MENU-------------");
         System.out.println("1. Show balance");
         System.out.println("2. Show Monster");
-        System.out.println("3. Create new Monster");
+        System.out.println("3. Create new Monster (Cost: " + Monster.getCOST() + " coins)");
         System.out.println("4. Battle");
         System.out.println("5. Marketplace");
         System.out.println("6. Send money");

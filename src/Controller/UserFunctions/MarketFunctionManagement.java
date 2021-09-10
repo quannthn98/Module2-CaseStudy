@@ -1,28 +1,31 @@
 package Controller.UserFunctions;
 
 import Controller.*;
+import Controller.Tools.OptionValidator;
 import Model.Account.Account;
 import Model.Monster.MonsterTypes.Monster;
 import Model.SellOrder;
 import Model.Transaction.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class MarketFunctionManagement {
     public static Scanner scanner = new Scanner(System.in);
-    private static SellOrderManagement sellOrderManagement = new SellOrderManagement();
-    private static TransactionManagement transactionManagement = new TransactionManagement();
+    private  SellOrderManagement sellOrderManagement = new SellOrderManagement();
+    private TransactionExecutor transactionExecutor = new TransactionExecutor();
 
     public void showAllSellOrder(){
         sellOrderManagement.showAllSellOrder();
     }
 
     public void showMySellOrder(Account account){
-        sellOrderManagement.showSellOrderByAccount(account);
+        sellOrderManagement.showSellOrderListByAccount(account);
     }
 
     public void buyMonster(Account account) {
+        List<SellOrder> sellOrderList = SellOrderManagement.getSellOrderList();
         System.out.println("----------------------------");
         if (!sellOrderManagement.isHavingSellOrder()){
             System.out.println("Marketplace has no Sell order at the moment");
@@ -30,18 +33,11 @@ public class MarketFunctionManagement {
             sellOrderManagement.showAllSellOrder();
             System.out.println("Please choose 1 order to buy");
 
-            int buyOrderIndex = scanner.nextInt();
-            while (buyOrderIndex < 1 || buyOrderIndex > SellOrderManagement.getSellOrderList().size()) {
-                System.out.println("Please input valid option");
-                buyOrderIndex = scanner.nextInt();
-            }
+            int sellOrderIndex = OptionValidator.getOption(1, sellOrderList.size());
+            SellOrder chosenSellOrder = sellOrderList.get(sellOrderIndex - 1);
 
-            SellOrder chosenSellOrder = SellOrderManagement.getSellOrderList().get(buyOrderIndex - 1);
-            if (chosenSellOrder.getSeller().getUsername().equals(account.getUsername())) {
-                System.out.println("----------------------------");
-                System.out.println("You can not purchase your own Order");
-                return;
-            }
+            if (isMyOrder(account, chosenSellOrder)) return;
+
             System.out.println("----------------------------");
             if (account.getBalance() < chosenSellOrder.getPrice()) {
                 System.out.println("Insufficient balance, please chose another order");
@@ -49,13 +45,7 @@ public class MarketFunctionManagement {
                 System.out.println("You had successfully purchased new Monster");
                 Account seller = chosenSellOrder.getSeller();
                 Account buyer = account;
-
-                Transaction buyMonsterTransaction = new BuyMonsterTransaction(buyer, seller, chosenSellOrder);
-                transactionManagement.newTransaction(buyMonsterTransaction);
-                buyMonsterTransaction.execute();
-
-                sellOrderManagement.removeOrderByObject(chosenSellOrder);
-
+                transactionExecutor.buyMonster(buyer, seller, chosenSellOrder);
             }
         }
     }
@@ -63,47 +53,34 @@ public class MarketFunctionManagement {
     public void sellMonster(Account account) {
         System.out.println("----------------------------");
         List<Monster> myMonsterList = account.getMonsterList();
-        if (myMonsterList.size() == 0){
-            System.out.println("----------------------------");
-            System.out.println("You dont have any monster ");
+        List<Monster> unlistedMonster = getUnlistedMonster(myMonsterList, account);
+        if (isAccountHaveMonster(myMonsterList)) return;
+
+        for (int i = 0; i < unlistedMonster.size(); i++) {
+            System.out.println((i + 1) + ". " + unlistedMonster.get(i));
+        }
+
+        Monster chosenMonster = getMonsterToSell(unlistedMonster);
+
+        if (isListed(account, chosenMonster)) {
+            System.out.println("You has already have an sell order for this monster");
             return;
         }
 
-        for (int i = 0; i < myMonsterList.size(); i++) {
-            System.out.println((i + 1) + ". " + myMonsterList.get(i));
-        }
-
-        System.out.println("----------------------------");
-        System.out.println("Please pick 1 monster to sell");
-        int monsterIndex = scanner.nextInt();
-
-        while (monsterIndex < 1 || monsterIndex > myMonsterList.size()) {
-            System.out.println("----------------------------");
-            System.out.println("Please pick valid option");
-            monsterIndex = scanner.nextInt();
-        }
-
-        Monster chosenMonster = myMonsterList.get(monsterIndex - 1);
-
-        if (isListed(account, chosenMonster)) return;
-
-        System.out.println("----------------------------");
-        System.out.println("Please set selling price");
-        int price = scanner.nextInt();
+        int price = setSellPrice();
 
         System.out.println("Your Sell order has been placed successfully");
         SellOrder sellOrder = new SellOrder(chosenMonster, account, price);
         sellOrderManagement.newSellOrder(sellOrder);
     }
 
-    private boolean isListed(Account account, Monster chosenMonster) {
-        List<SellOrder> mySellOrder = sellOrderManagement.getSellOrderByAccount(account);
-        for (SellOrder sellOrder: mySellOrder){
-            if (chosenMonster.equals(sellOrder.getMonster())) {
-                System.out.println("----------------------------");
-                System.out.println("You has already have an sell order for this monster");
-                return true;
-            }
+
+
+    private boolean isAccountHaveMonster(List<Monster> myMonsterList) {
+        if (myMonsterList.size() == 0){
+            System.out.println("----------------------------");
+            System.out.println("You dont have any monster ");
+            return true;
         }
         return false;
     }
@@ -113,7 +90,7 @@ public class MarketFunctionManagement {
         if (!sellOrderManagement.isHavingSellOrder(account)) {
             System.out.println("You dont have any sell order");
         } else {
-            chosenSellOrder = getChosenSellOrderFromAccount(account);
+            chosenSellOrder = getSellOrderFromAccount(account);
             sellOrderManagement.removeOrderByObject(chosenSellOrder);
             System.out.println("Remove order successfully");
         }
@@ -123,32 +100,71 @@ public class MarketFunctionManagement {
         if (!sellOrderManagement.isHavingSellOrder(account)) {
             System.out.println("You dont have any sell order");
         } else {
-            SellOrder chosenSellOrder = getChosenSellOrderFromAccount(account);
-            System.out.println("Please input new Price");
-            int newPrice = scanner.nextInt();
+            SellOrder chosenSellOrder = getSellOrderFromAccount(account);
+
+            int newPrice = setSellPrice();
             sellOrderManagement.setOrderPrice(chosenSellOrder, newPrice);
             System.out.println("Set order price successfully");
         }
     }
 
-    public SellOrder getChosenSellOrderFromAccount(Account account) {
-        List<SellOrder> mySellOrder = sellOrderManagement.getSellOrderByAccount(account);
+    public SellOrder getSellOrderFromAccount(Account account) {
+        List<SellOrder> mySellOrderList = sellOrderManagement.getSellOrderListByAccount(account);
+
         System.out.println("----------------------------");
-        for (int i = 0; i < mySellOrder.size(); i++) {
-            System.out.println((i + 1) + ". " + mySellOrder.get(i));
+        for (int i = 0; i < mySellOrderList.size(); i++) {
+            System.out.println((i + 1) + ". " + mySellOrderList.get(i));
         }
+
         System.out.println("----------------------------");
         System.out.println("Please choose 1 sell order");
+        int mySellOrderIndex = OptionValidator.getOption(1, mySellOrderList.size());
 
-        int mySellOrderIndex = scanner.nextInt();
-
-        while (mySellOrderIndex < 1 || mySellOrderIndex > mySellOrder.size()) {
-            System.out.println("----------------------------");
-            System.out.println("Please input valid option");
-            mySellOrderIndex = scanner.nextInt();
-        }
-        SellOrder chosenSellOrder = mySellOrder.get(mySellOrderIndex - 1);
+        SellOrder chosenSellOrder = mySellOrderList.get(mySellOrderIndex - 1);
         return chosenSellOrder;
+    }
+
+    private Monster getMonsterToSell(List<Monster> unlistedMonster) {
+        System.out.println("----------------------------");
+        System.out.println("Please pick 1 monster to sell");
+        int monsterIndex = OptionValidator.getOption(1, unlistedMonster.size());
+        Monster chosenMonster = unlistedMonster.get(monsterIndex - 1);
+        return chosenMonster;
+    }
+
+    private boolean isMyOrder(Account account, SellOrder chosenSellOrder) {
+        if (chosenSellOrder.getSeller().getUsername().equals(account.getUsername())) {
+            System.out.println("----------------------------");
+            System.out.println("You can not purchase your own Order");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isListed(Account account, Monster chosenMonster) {
+        List<SellOrder> mySellOrder = sellOrderManagement.getSellOrderListByAccount(account);
+        for (SellOrder sellOrder: mySellOrder){
+            if (chosenMonster.getId() == sellOrder.getMonster().getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Monster> getUnlistedMonster(List<Monster> myMonster, Account account){
+        List<Monster> unlistedMonster = new ArrayList<>();
+        for (Monster monster: myMonster){
+            if (!isListed(account, monster )){
+                unlistedMonster.add(monster);
+            }
+        }
+        return unlistedMonster;
+    }
+
+    private int setSellPrice() {
+        System.out.println("----------------------------");
+        System.out.println("Please set selling price");
+        return scanner.nextInt();
     }
 
 }

@@ -2,33 +2,26 @@ package Controller.AdminFunctions;
 
 import Controller.AccountManagement;
 import Controller.DataHandler.AccountDataHandler;
+import Controller.SellOrderManagement;
 import Controller.Tools.AccountValidator;
 import Model.Account.Account;
+import Model.Monster.MonsterTypes.Monster;
+import Model.SellOrder;
 import View.Admin.AdminMainMenu;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminAccountManagementFunctions {
     public static Scanner scanner = new Scanner(System.in);
     private AccountManagement accountManager = AccountManagement.getAccountManager();
+    private SellOrderManagement sellOrderManagement = new SellOrderManagement();
     private AccountValidator validator = new AccountValidator();
 
     public void showAccountList(){
         accountManager.showAccountList();
-    }
-
-    public void openMainMenu() {
-        AdminMainMenu adminMenu = new AdminMainMenu();
-        adminMenu.run();
-    }
-
-    private int getAccountIndex(String display){
-        System.out.println("Please input username you want to " + display);
-        String username = scanner.nextLine();
-        int index = accountManager.getAccountIndexByUsername(username);
-        return index;
     }
 
     public void deleteAccountByUsername() {
@@ -43,11 +36,13 @@ public class AdminAccountManagementFunctions {
                 System.out.println("Can not remove this account");
             } else {
                 System.out.println("Remove account successfully");
+                Account chosenAccount = accountManager.getAccountByIndex(index);
+                removeSellOrderByDeleteMonster(chosenAccount);
+                chosenAccount.setMonsterList(null);
                 accountManager.removeAccount(index);
             }
         }
     }
-
 
     public void deleteMonsterOfAccount() {
         final String DISPLAY = "delete Monster";
@@ -57,6 +52,7 @@ public class AdminAccountManagementFunctions {
             System.out.println("Can not found this account, please try again");
         } else {
             Account account = accountManager.getAccountByIndex(index);
+            removeSellOrderByDeleteMonster(account);
             account.setMonsterList(new ArrayList<>());
             System.out.println("Delete MonsterList successfully");
             AccountDataHandler.writeToFile();
@@ -93,13 +89,37 @@ public class AdminAccountManagementFunctions {
             password = scanner.nextLine();
         } while (!validator.isValidated(password));
 
-        System.out.println("Add new account successfully");
         Account newAccount = new Account(username, password);
         accountManager.addNewAccount(newAccount);
+
+        System.out.println("Add new account successfully");
     }
 
     public void sortByBalance(){
         Collections.sort(accountManager.getAccountList());
     }
 
+    public void openMainMenu() {
+        AdminMainMenu adminMenu = new AdminMainMenu();
+        adminMenu.run();
+    }
+
+    private int getAccountIndex(String display){
+        System.out.println("Please input username you want to " + display);
+        String username = scanner.nextLine();
+        int index = accountManager.getAccountIndexByUsername(username);
+        return index;
+    }
+
+    private void removeSellOrderByDeleteMonster(Account chosenAccount) {
+        List<Monster> accountMonsterList = chosenAccount.getMonsterList();
+        List<SellOrder> accountSellOrderList = sellOrderManagement.getSellOrderListByAccount(chosenAccount);
+        for (Monster monster: accountMonsterList){
+            for (SellOrder sellOrder:accountSellOrderList){
+                if (monster.getId() == sellOrder.getMonster().getId()){
+                    sellOrderManagement.removeOrderByMonster(monster);
+                }
+            }
+        }
+    }
 }

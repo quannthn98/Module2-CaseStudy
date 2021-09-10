@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.DataHandler.SellOrderDataHandler;
 import Model.Account.Account;
+import Model.Monster.MonsterTypes.Monster;
 import Model.SellOrder;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class SellOrderManagement {
         }
     }
 
-    public List<SellOrder> getSellOrderByAccount(Account account) {
+    public List<SellOrder> getSellOrderListByAccount(Account account) {
         List<SellOrder> accountSellOrder = new ArrayList<>();
         for (int i = 0; i < sellOrderList.size(); i++) {
             if (account.getUsername().equals(sellOrderList.get(i).getSeller().getUsername())) {
@@ -49,9 +50,9 @@ public class SellOrderManagement {
         return accountSellOrder;
     }
 
-    public void showSellOrderByAccount(Account account) {
+    public void showSellOrderListByAccount(Account account) {
         int count = 0;
-        List<SellOrder> accountSellOrder = getSellOrderByAccount(account);
+        List<SellOrder> accountSellOrder = getSellOrderListByAccount(account);
         if (accountSellOrder.size() == 0) {
             return;
         } else {
@@ -98,6 +99,16 @@ public class SellOrderManagement {
         return index;
     }
 
+    public int findOrderByMonster(Monster monster){
+        int index = -1;
+        for (int i = 0; i < sellOrderList.size(); i++) {
+            if (sellOrderList.get(i).getMonster().getId() == monster.getId()){
+                index = i;
+            }
+        }
+        return index;
+    }
+
     public void removeOrderById(int id) {
         int index = findOrderById(id);
         if (index == -1) {
@@ -114,13 +125,18 @@ public class SellOrderManagement {
         SellOrderDataHandler.writeToFile();
     }
 
+    public void removeOrderByMonster(Monster monster){
+        int index = findOrderByMonster(monster);
+        sellOrderList.remove(index);
+        SellOrderDataHandler.writeToFile();
+    }
+
     public void sortByPrice() {
         Collections.sort(sellOrderList);
     }
 
     public void removeAllSellOrder() {
         sellOrderList = new ArrayList<>();
-
     }
 
 

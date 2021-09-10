@@ -2,6 +2,9 @@ package Controller.UserFunctions;
 
 import Controller.AccountManagement;
 import Controller.DataHandler.AccountDataHandler;
+import Controller.SellOrderManagement;
+import Controller.Tools.OptionValidator;
+import Controller.TransactionExecutor;
 import Controller.TransactionManagement;
 import Controller.Monster.Factory.MonsterFactory;
 import Model.Account.Account;
@@ -9,16 +12,18 @@ import Model.Creep.Creep;
 import Model.Monster.MonsterTypes.Monster;
 import Model.Transaction.*;
 import View.User.MarketplaceMenu;
+import View.User.UserMenu;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class UserFunctionManagement {
     private Account account;
-
+    private TransactionExecutor transactionExecutor = new TransactionExecutor();
     private static MonsterFactory monsterFactory = MonsterFactory.getInstance();
     private static TransactionManagement transactionManagement = new TransactionManagement();
     private AccountManagement accountManagement = AccountManagement.getAccountManager();
+    private SellOrderManagement sellOrderManagement = new SellOrderManagement();
 
     public static Scanner scanner = new Scanner(System.in);
 
@@ -51,18 +56,9 @@ public class UserFunctionManagement {
 
     public void createNewMonster() {
         if (account.getBalance() >= Monster.getCOST()) {
-
+            Account fromAccount = account;
             Monster newMonster = monsterFactory.createNewMonster();
-            Transaction generateMonsterTransaction = new GenerateMonsterTransaction(account, null, newMonster);
-            generateMonsterTransaction.execute();
-
-            transactionManagement.newTransaction(generateMonsterTransaction);
-            AccountDataHandler.writeToFile();
-
-            System.out.println("----------------------------");
-            System.out.println("Congratulation, you have received new Monster");
-            System.out.println(newMonster);
-
+            transactionExecutor.generateMonster(fromAccount, newMonster);
         } else {
             System.out.println("----------------------------");
             System.out.println("Insufficient balance, please deposit");
@@ -96,20 +92,7 @@ public class UserFunctionManagement {
         } else {
             Account fromAccount = account;
             Account toAccount = accountManagement.getAccountList().get(index);
-
-            if (toAccount.getUsername().equals(account.getUsername())) {
-                System.out.println("You can not send money to your self");
-                return;
-            }
-
-            System.out.println("Please input Amount of Coins you want to transfer");
-            int transferAmount = scanner.nextInt();
-
-            if (transferAmount > fromAccount.getBalance()) {
-                System.out.println("Insufficient balance, please try again");
-            } else {
-                transfer(fromAccount, toAccount, transferAmount);
-            }
+            transactionExecutor.sendMoney(fromAccount, toAccount);
         }
     }
 
@@ -122,11 +105,25 @@ public class UserFunctionManagement {
             Account fromAccount = account;
             Account toAccount = accountManagement.getAccountList().get(index);
 
-            Transaction sendMonsterTransaction = new SendMonsterTransaction(fromAccount, toAccount, chosenMonster);
-            sendMonsterTransaction.execute();
-
-            System.out.println("You have sent your monster to account " + toAccount.getUsername());
-            transactionManagement.newTransaction(sendMonsterTransaction);
+            int sellOrderContainMonsterIndex = sellOrderManagement.findOrderByMonster(chosenMonster);
+            if (sellOrderContainMonsterIndex != -1) {
+                System.out.println("This monster is currently in your Sell order");
+                System.out.println("Do you want to remove this sell order to Send this monster?");
+                System.out.println("Press Y to remove / N to cancel");
+                String option = scanner.nextLine();
+                switch (option) {
+                    case "Y":
+                        sellOrderManagement.removeOrderByMonster(chosenMonster);
+                        transactionExecutor.sendMonster(fromAccount, toAccount, chosenMonster);
+                        break;
+                    case "N":
+                        UserMenu userMenu = new UserMenu(account);
+                        userMenu.run();
+                        break;
+                }
+            } else {
+                transactionExecutor.sendMonster(fromAccount, toAccount, chosenMonster);
+            }
         }
     }
 
@@ -145,12 +142,7 @@ public class UserFunctionManagement {
             System.out.println("----------------------------");
             System.out.println("Please pick 1 Monster from your List");
 
-            int index = scanner.nextInt();
-            while (index < 1 || index > getTotalNumberMonster()) {
-                System.out.println("----------------------------");
-                System.out.println("Please input valid Monster option");
-                index = scanner.nextInt();
-            }
+            int index = OptionValidator.getOption(1, getTotalNumberMonster());
 
             chosenMonster = getAccount().getMonsterList().get(index - 1);
         }
@@ -162,13 +154,6 @@ public class UserFunctionManagement {
         String username = scanner.nextLine();
         int index = accountManagement.getAccountIndexByUsername(username);
         return index;
-    }
-
-    private void transfer(Account fromAccount, Account toAccount, int transferAmount) {
-        Transaction sendMoneyTransaction = new SendMoneyTransaction(fromAccount, toAccount, transferAmount);
-        sendMoneyTransaction.execute();
-        transactionManagement.newTransaction(sendMoneyTransaction);
-        System.out.println("You sent " + transferAmount + " coins to account " + toAccount.getUsername());
     }
 
 }

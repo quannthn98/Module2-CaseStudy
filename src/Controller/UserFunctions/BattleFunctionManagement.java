@@ -2,6 +2,7 @@ package Controller.UserFunctions;
 
 import Controller.CreepManagement;
 import Controller.DataHandler.AccountDataHandler;
+import Controller.Tools.OptionValidator;
 import Controller.Tools.RandomNumberGenerator;
 import Model.Account.Account;
 import Model.Battle.Battle;
@@ -50,13 +51,7 @@ public class BattleFunctionManagement {
 
         Creep chosenCreep;
         creepManagement.showCreepForBattle(chosenMonster);
-        int index = scanner.nextInt();
-
-        while (index < 1 || index > creepManagement.getTotalNumberCreep()) {
-            System.out.println("----------------------------");
-            System.out.println("Please input valid Monster option");
-            index = scanner.nextInt();
-        }
+        int index = OptionValidator.getOption(1 , creepManagement.getTotalNumberCreep());
 
         chosenCreep = creepManagement.getCreepByIndex(index - 1);
         return chosenCreep;

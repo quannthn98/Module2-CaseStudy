@@ -1,6 +1,7 @@
 package Controller.AdminFunctions;
 
 import Controller.Monster.MonsterManagement;
+import Controller.SellOrderManagement;
 import Model.Monster.MonsterTypes.Monster;
 import View.Admin.AdminMainMenu;
 
@@ -9,6 +10,7 @@ import java.util.Scanner;
 public class AdminMonsterManagementFunctions {
     public static Scanner scanner = new Scanner(System.in);
     private MonsterManagement monsterManager = new MonsterManagement();
+    private SellOrderManagement sellOrderManagement = new SellOrderManagement();
 
     public void showMonsterList(){
         monsterManager.updateMonsterList();
@@ -26,6 +28,11 @@ public class AdminMonsterManagementFunctions {
             System.out.println("Can not found this Monster, please try again");
         } else {
             System.out.println("Remove monster successfully");
+            Monster monster = monsterManager.getMonsterList().get(index);
+            int sellOrderContainMonsterIndex = sellOrderManagement.findOrderByMonster(monster);
+            if (sellOrderContainMonsterIndex != -1){
+                sellOrderManagement.removeOrderByMonster(monster);
+            }
             monsterManager.removeMonsterById(id);
         }
     }

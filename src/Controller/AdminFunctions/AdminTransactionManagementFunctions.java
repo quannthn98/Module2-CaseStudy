@@ -1,6 +1,7 @@
 package Controller.AdminFunctions;
 
 import Controller.AccountManagement;
+import Controller.Tools.OptionValidator;
 import Controller.TransactionManagement;
 import View.Admin.AdminMainMenu;
 import View.Admin.AdminTransactionMenu;
@@ -38,11 +39,7 @@ public class AdminTransactionManagementFunctions {
         int option;
         typeOfTransactionMenu();
         System.out.println("Please choose type of Transaction");
-        option = scanner.nextInt();
-        while (option < 0 || option > 4) {
-            System.out.println("Please input valid option");
-            option = scanner.nextInt();
-        }
+        option = OptionValidator.getOption(0, 4);
         switch (option) {
             case 1:
                 transactionManagement.showSendMoneyTransaction();

@@ -2,10 +2,12 @@ package Controller.AdminFunctions;
 
 import Controller.AccountManagement;
 import Controller.SellOrderManagement;
+import Controller.Tools.OptionValidator;
 import Model.Account.Account;
 import Model.SellOrder;
 import View.Admin.AdminMainMenu;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminSellOrderManagementFunctions {
@@ -26,7 +28,7 @@ public class AdminSellOrderManagementFunctions {
             System.out.println("Can not found this account, please try again");
         } else {
             Account account = accountManagement.getAccountByUsername(username);
-            sellOrderManagement.showSellOrderByAccount(account);
+            sellOrderManagement.showSellOrderListByAccount(account);
         }
     }
 
@@ -57,13 +59,10 @@ public class AdminSellOrderManagementFunctions {
     }
 
     private SellOrder getSellOrder() {
+        List<SellOrder> sellOrderList = SellOrderManagement.getSellOrderList();
         sellOrderManagement.showAllSellOrder();
         System.out.println("Please input your option");
-        int orderIndex = scanner.nextInt();
-        while (orderIndex < 1 || orderIndex > SellOrderManagement.getSellOrderList().size()) {
-            System.out.println("Please choose valid option");
-            orderIndex = scanner.nextInt();
-        }
+        int orderIndex = OptionValidator.getOption(1, sellOrderList.size());
         SellOrder sellOrder = SellOrderManagement.getSellOrderList().get(orderIndex - 1);
         return sellOrder;
     }
@@ -74,7 +73,4 @@ public class AdminSellOrderManagementFunctions {
         sellOrder.setPrice(newPrice);
         System.out.println("Change price successfully");
     }
-
-
-
 }

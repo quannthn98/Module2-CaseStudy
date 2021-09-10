@@ -12,13 +12,13 @@ public class GuestMenu {
     public static AccountValidator validator = new AccountValidator();
     public static Scanner scanner = new Scanner(System.in);
 
-    public void run(){
+    public void run() {
         int option;
         do {
             menu();
             option = scanner.nextInt();
             scanner.nextLine();
-            switch (option){
+            switch (option) {
                 case 1:
                     doRegister();
                     break;
@@ -33,28 +33,37 @@ public class GuestMenu {
     }
 
     private void doLogin() {
-        System.out.println("----------------------------");
-        System.out.println("Please input your username");
-        String userName = scanner.nextLine();
-
-        System.out.println("----------------------------");
-        System.out.println("Please input your password");
-        String password = scanner.nextLine();
-
-        Account account =  accountManagement.login(userName, password);
-
-        if (account == null){
+        int count = 5;
+        do {
             System.out.println("----------------------------");
-            System.out.println("Username or password invalid, please try again");
-        } else {
-            if (account.getUsername().equals("admin")){
-                AdminMainMenu adminMenu = new AdminMainMenu();
-                adminMenu.run();
+            System.out.println("Please input your username");
+            String userName = scanner.nextLine();
+
+            System.out.println("----------------------------");
+            System.out.println("Please input your password");
+            String password = scanner.nextLine();
+
+            Account account = accountManagement.login(userName, password);
+
+            if (account == null) {
+
+                System.out.println("----------------------------");
+                System.out.println("Username or password invalid, please try again");
+                count--;
+                System.out.println("You have " + count + " time(s) to retry");
+
             } else {
-                UserMenu userMenu = new UserMenu(account);
-                userMenu.run();
+                if (account.getUsername().equals("admin")) {
+                    AdminMainMenu adminMenu = new AdminMainMenu();
+                    adminMenu.run();
+                } else {
+                    UserMenu userMenu = new UserMenu(account);
+                    userMenu.run();
+                }
             }
-        }
+        } while (count > 0);
+        System.out.println("You have retried more than 5 times, system will automatically exit");
+        System.exit(0);
     }
 
     private void doRegister() {
@@ -80,7 +89,7 @@ public class GuestMenu {
 
     }
 
-    public void menu(){
+    public void menu() {
         System.out.println("----------------------------");
         System.out.println("Welcome to Model.Monster Infinity");
         System.out.println("1. Register");
@@ -88,6 +97,5 @@ public class GuestMenu {
         System.out.println("0. Exit");
         System.out.println("----------------------------");
         System.out.println("Please input your option");
-
     }
 }

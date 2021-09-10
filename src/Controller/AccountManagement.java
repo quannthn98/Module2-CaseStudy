@@ -13,6 +13,20 @@ public class AccountManagement {
     private AccountManagement() {
     }
 
+//    static {
+//        boolean isHavingAdmin = false;
+//        for (Account account: accountList){
+//            if (account.getUsername().equals("admin")){
+//                isHavingAdmin = true;
+//                break;
+//            }
+//        }
+//        if (!isHavingAdmin){
+//            accountList.add(new Account("admin", "admin"));
+//            AccountDataHandler.writeToFile();
+//        }
+//    }
+
     public static void setAccountList(List<Account> accountList) {
         AccountManagement.accountList = accountList;
     }
