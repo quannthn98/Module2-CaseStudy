@@ -88,17 +88,6 @@ public class SellOrderManagement {
         return isHavingSellOrder;
     }
 
-    public int findOrderById(int id) {
-        int index = -1;
-        for (int i = 0; i < sellOrderList.size(); i++) {
-            if (id == sellOrderList.get(i).getId()) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
-
     public int findOrderByMonster(Monster monster){
         int index = -1;
         for (int i = 0; i < sellOrderList.size(); i++) {
@@ -107,17 +96,6 @@ public class SellOrderManagement {
             }
         }
         return index;
-    }
-
-    public void removeOrderById(int id) {
-        int index = findOrderById(id);
-        if (index == -1) {
-            System.out.println("Can not found this order");
-        } else {
-            System.out.println("Remove order successfully");
-            sellOrderList.remove(index);
-        }
-        SellOrderDataHandler.writeToFile();
     }
 
     public void removeOrderByObject(SellOrder sellOrder) {

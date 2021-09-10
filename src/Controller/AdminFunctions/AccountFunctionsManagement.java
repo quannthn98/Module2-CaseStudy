@@ -1,8 +1,7 @@
 package Controller.AdminFunctions;
 
-import Controller.AccountManagement;
 import Controller.DataHandler.AccountDataHandler;
-import Controller.SellOrderManagement;
+import Controller.*;
 import Controller.Tools.AccountValidator;
 import Model.Account.Account;
 import Model.Monster.MonsterTypes.Monster;
@@ -14,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdminAccountManagementFunctions {
+public class AccountFunctionsManagement {
     public static Scanner scanner = new Scanner(System.in);
     private AccountManagement accountManager = AccountManagement.getAccountManager();
     private SellOrderManagement sellOrderManagement = new SellOrderManagement();
@@ -117,7 +116,8 @@ public class AdminAccountManagementFunctions {
         for (Monster monster: accountMonsterList){
             for (SellOrder sellOrder:accountSellOrderList){
                 if (monster.getId() == sellOrder.getMonster().getId()){
-                    sellOrderManagement.removeOrderByMonster(monster);
+                    sellOrderManagement.removeOrderByObject(sellOrder);
+                    break;
                 }
             }
         }

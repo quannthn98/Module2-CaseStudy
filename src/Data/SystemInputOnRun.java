@@ -11,6 +11,7 @@ import Model.Transaction.Transaction;
 import java.util.List;
 
 public class SystemInputOnRun {
+    private static AccountManagement accountManagement = AccountManagement.getAccountManager();
     private static MonsterManagement monsterManagement = new MonsterManagement();
 
     public static void getData() {
@@ -21,6 +22,8 @@ public class SystemInputOnRun {
         importMonsterData();
 
         importTransactionData();
+
+        accountManagement.createAdminOnRun();
 
     }
 

@@ -30,11 +30,11 @@ public class Battle extends Thread {
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
-
         }
-        boolean battleResult;
+
         double winRate = WinRateCalculator.winRateCalculating(monster, creep);
         double result = rng.generateNumber();
+        boolean battleResult;
         if (result > winRate) {
             battleResult = false;
         } else {

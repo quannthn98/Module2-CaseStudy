@@ -1,12 +1,12 @@
 package View.Admin;
 
-import Controller.AdminFunctions.AdminSellOrderManagementFunctions;
+import Controller.AdminFunctions.SellOrderFunctionsManagement;
 
 import java.util.Scanner;
 
 public class AdminSellOrderMenu {
     public static Scanner scanner = new Scanner(System.in);
-    private AdminSellOrderManagementFunctions adminSellOrderManagementFunctions = new AdminSellOrderManagementFunctions();
+    private SellOrderFunctionsManagement adminSellOrderManagementFunctions = new SellOrderFunctionsManagement();
 
     public void run() {
         int option;

@@ -32,7 +32,6 @@ public class AccountDataHandler{
             fis.close();
             ois.close();
         } catch (Exception ex) {
-            System.err.println("Account Data is empty");
         }
         return accountList;
     }

@@ -7,7 +7,7 @@ import View.Admin.AdminMainMenu;
 
 import java.util.Scanner;
 
-public class AdminMonsterManagementFunctions {
+public class MonsterFunctionsManagement {
     public static Scanner scanner = new Scanner(System.in);
     private MonsterManagement monsterManager = new MonsterManagement();
     private SellOrderManagement sellOrderManagement = new SellOrderManagement();

@@ -10,7 +10,7 @@ import View.Admin.AdminMainMenu;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdminSellOrderManagementFunctions {
+public class SellOrderFunctionsManagement {
     public static Scanner scanner = new Scanner(System.in);
     private static SellOrderManagement sellOrderManagement = new SellOrderManagement();
     private static AccountManagement accountManagement = AccountManagement.getAccountManager();

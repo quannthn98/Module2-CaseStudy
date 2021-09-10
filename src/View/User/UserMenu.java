@@ -1,20 +1,19 @@
 package View.User;
 
-import Controller.TransactionManagement;
-import Controller.UserFunctions.UserFunctionManagement;
+import Controller.UserFunctions.MainUserFunctionsManagement;
 import Model.Account.Account;
 import Model.Monster.MonsterTypes.Monster;
 
 import java.util.Scanner;
 
 public class UserMenu {
-    private UserFunctionManagement userFunctionManagement;
+    private MainUserFunctionsManagement userFunctionManagement;
     private Account thisAccount;
     public static Scanner scanner = new Scanner(System.in);
 
     public UserMenu(Account account) {
         thisAccount = account;
-        userFunctionManagement = new UserFunctionManagement(account);
+        userFunctionManagement = new MainUserFunctionsManagement(account);
     }
 
     public void run() {
@@ -60,8 +59,6 @@ public class UserMenu {
     }
 
     public void menu() {
-        System.out.println("----------------------------");
-        System.out.println("User: " + thisAccount.getUsername());
         System.out.println("-----------MENU-------------");
         System.out.println("1. Show balance");
         System.out.println("2. Show Monster");
@@ -74,6 +71,5 @@ public class UserMenu {
         System.out.println("0. Logout");
         System.out.println("----------------------------");
         System.out.println("Please input your option");
-
     }
 }

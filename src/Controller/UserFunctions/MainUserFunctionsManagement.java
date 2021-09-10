@@ -1,24 +1,19 @@
 package Controller.UserFunctions;
 
-import Controller.AccountManagement;
-import Controller.DataHandler.AccountDataHandler;
-import Controller.SellOrderManagement;
+import Controller.*;
 import Controller.Tools.OptionValidator;
-import Controller.TransactionExecutor;
-import Controller.TransactionManagement;
 import Controller.Monster.Factory.MonsterFactory;
 import Model.Account.Account;
 import Model.Creep.Creep;
 import Model.Monster.MonsterTypes.Monster;
-import Model.Transaction.*;
-import View.User.MarketplaceMenu;
-import View.User.UserMenu;
+import View.User.*;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class UserFunctionManagement {
+public class MainUserFunctionsManagement {
     private Account account;
+
     private TransactionExecutor transactionExecutor = new TransactionExecutor();
     private static MonsterFactory monsterFactory = MonsterFactory.getInstance();
     private static TransactionManagement transactionManagement = new TransactionManagement();
@@ -27,7 +22,7 @@ public class UserFunctionManagement {
 
     public static Scanner scanner = new Scanner(System.in);
 
-    public UserFunctionManagement(Account account) {
+    public MainUserFunctionsManagement(Account account) {
         this.account = account;
     }
 

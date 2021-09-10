@@ -1,11 +1,11 @@
 package View.Admin;
 
-import Controller.AdminFunctions.AdminAccountManagementFunctions;
+import Controller.AdminFunctions.AccountFunctionsManagement;
 import java.util.Scanner;
 
 public class AdminAccountMenu {
     public static Scanner scanner = new Scanner(System.in);
-    private AdminAccountManagementFunctions accountManager = new AdminAccountManagementFunctions();
+    private AccountFunctionsManagement adminAccountManagementFunctions = new AccountFunctionsManagement();
 
     public void run() {
         int option;
@@ -15,25 +15,25 @@ public class AdminAccountMenu {
             scanner.nextLine();
             switch (option) {
                 case 1:
-                    accountManager.showAccountList();
+                    adminAccountManagementFunctions.showAccountList();
                     break;
                 case 2:
-                    accountManager.deleteAccountByUsername();
+                    adminAccountManagementFunctions.deleteAccountByUsername();
                     break;
                 case 3:
-                    accountManager.AddNewAccount();
+                    adminAccountManagementFunctions.AddNewAccount();
                     break;
                 case 4:
-                    accountManager.changeAccountBalance();
+                    adminAccountManagementFunctions.changeAccountBalance();
                     break;
                 case 5:
-                    accountManager.deleteMonsterOfAccount();
+                    adminAccountManagementFunctions.deleteMonsterOfAccount();
                     break;
                 case 6:
-                    accountManager.sortByBalance();
+                    adminAccountManagementFunctions.sortByBalance();
                     break;
                 case 0:
-                    accountManager.openMainMenu();
+                    adminAccountManagementFunctions.openMainMenu();
                     break;
             }
         } while (option != 0);
@@ -49,6 +49,7 @@ public class AdminAccountMenu {
         System.out.println("6. Sort by Balance");
         System.out.println("0. Return to Main menu");
         System.out.println("----------------------------");
+        System.out.println("Please input your option");
     }
 
 }

@@ -8,7 +8,7 @@ import View.Admin.AdminTransactionMenu;
 
 import java.util.Scanner;
 
-public class AdminTransactionManagementFunctions {
+public class TransactionFunctionsManagement {
     public static Scanner scanner = new Scanner(System.in);
     private TransactionManagement transactionManagement = new TransactionManagement();
     private AccountManagement accountManagement = AccountManagement.getAccountManager();

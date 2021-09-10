@@ -31,7 +31,6 @@ public class SellOrderDataHandler{
             fis.close();
             ois.close();
         } catch (Exception ex) {
-            System.err.println("Sell order Data is empty");
         }
         return sellOrderList;
     }

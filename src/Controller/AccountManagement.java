@@ -13,20 +13,6 @@ public class AccountManagement {
     private AccountManagement() {
     }
 
-//    static {
-//        boolean isHavingAdmin = false;
-//        for (Account account: accountList){
-//            if (account.getUsername().equals("admin")){
-//                isHavingAdmin = true;
-//                break;
-//            }
-//        }
-//        if (!isHavingAdmin){
-//            accountList.add(new Account("admin", "admin"));
-//            AccountDataHandler.writeToFile();
-//        }
-//    }
-
     public static void setAccountList(List<Account> accountList) {
         AccountManagement.accountList = accountList;
     }
@@ -69,11 +55,11 @@ public class AccountManagement {
         return index;
     }
 
-    public Account getAccountByIndex(int index){
+    public Account getAccountByIndex(int index) {
         return accountList.get(index);
     }
 
-    public Account getAccountByUsername(String username){
+    public Account getAccountByUsername(String username) {
         int index = getAccountIndexByUsername(username);
         return accountList.get(index);
     }
@@ -90,6 +76,17 @@ public class AccountManagement {
     public void removeAccount(int index) {
         accountList.remove(index);
         AccountDataHandler.writeToFile();
+    }
+
+    public void createAdminOnRun() {
+        for (Account account : accountList) {
+            if (account.getUsername().equals("admin")) {
+                return;
+            }
+        }
+        accountList.add(new Account("admin", "admin"));
+        AccountDataHandler.writeToFile();
+
     }
 
 }

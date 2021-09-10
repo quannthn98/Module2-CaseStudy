@@ -53,6 +53,7 @@ public class GuestMenu {
                 System.out.println("You have " + count + " time(s) to retry");
 
             } else {
+                System.out.println("Log in successfully");
                 if (account.getUsername().equals("admin")) {
                     AdminMainMenu adminMenu = new AdminMainMenu();
                     adminMenu.run();
@@ -91,7 +92,7 @@ public class GuestMenu {
 
     public void menu() {
         System.out.println("----------------------------");
-        System.out.println("Welcome to Model.Monster Infinity");
+        System.out.println("Welcome to Monster Infinity");
         System.out.println("1. Register");
         System.out.println("2. Login");
         System.out.println("0. Exit");

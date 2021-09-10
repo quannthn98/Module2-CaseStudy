@@ -1,12 +1,12 @@
 package View.Admin;
 
-import Controller.AdminFunctions.AdminMonsterManagementFunctions;
+import Controller.AdminFunctions.MonsterFunctionsManagement;
 
 import java.util.Scanner;
 
 public class AdminMonsterMenu {
     public static Scanner scanner = new Scanner(System.in);
-    AdminMonsterManagementFunctions adminMonsterManagementFunctions = new AdminMonsterManagementFunctions();
+    MonsterFunctionsManagement adminMonsterManagementFunctions = new MonsterFunctionsManagement();
 
     public void run() {
         int option;
@@ -42,5 +42,6 @@ public class AdminMonsterMenu {
         System.out.println("4. Remove Monster by Id");
         System.out.println("0. Return to Main menu");
         System.out.println("----------------------------");
+        System.out.println("Please input your option");
     }
 }

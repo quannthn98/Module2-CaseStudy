@@ -33,7 +33,6 @@ public class TransactionDataHandler {
             fis.close();
             ois.close();
         } catch (Exception ex) {
-            System.err.println("Transaction Data is empty");
         }
         return transactionList;
     }

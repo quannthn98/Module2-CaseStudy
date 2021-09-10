@@ -18,8 +18,7 @@ public class AccountValidator {
         Matcher matcher = pattern.matcher(string);
         if (!matcher.matches()){
             System.out.println("----------------------------");
-            System.out.println("Please input again, must have 4 - 8 characters without any special one");
-            System.out.println("----------------------------");
+            System.out.println("Please input again, must have 4 - 8 characters without any special character");
         }
         return matcher.matches();
     }
@@ -27,6 +26,7 @@ public class AccountValidator {
     public boolean isDuplicated(String username){
         boolean isDuplicated = false;
         if (accountManagement.isAccountExist(username)){
+            System.out.println("----------------------------");
             System.out.println("Username has already existed, please input another username");
             isDuplicated = true;
         }

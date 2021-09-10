@@ -1,8 +1,7 @@
 package View.Admin;
 
-import Controller.AccountManagement;
-import Controller.AdminFunctions.AdminTransactionManagementFunctions;
-import Controller.TransactionManagement;
+import Controller.AdminFunctions.TransactionFunctionsManagement;
+import Controller.*;
 
 import java.util.Scanner;
 
@@ -10,7 +9,7 @@ public class AdminTransactionMenu {
     public static Scanner scanner = new Scanner(System.in);
     private TransactionManagement transactionManagement = new TransactionManagement();
     private AccountManagement accountManagement = AccountManagement.getAccountManager();
-    private AdminTransactionManagementFunctions adminTransactionManagementFunctions = new AdminTransactionManagementFunctions();
+    private TransactionFunctionsManagement adminTransactionManagementFunctions = new TransactionFunctionsManagement();
 
     public void run() {
         int option;
@@ -46,6 +45,6 @@ public class AdminTransactionMenu {
         System.out.println("4. Find Transaction by Id");
         System.out.println("0. Back to admin menu");
         System.out.println("----------------------------");
-    }
+        System.out.println("Please input your option");    }
 
 }

@@ -39,10 +39,13 @@ public class AdminMainMenu {
     }
 
     public void menu() {
+        System.out.println("------Hello Admin ----------");
         System.out.println("1. Account Management");
         System.out.println("2. Monster Management");
         System.out.println("3. Transaction Management");
         System.out.println("4. Sell order Management");
         System.out.println("0. Logout");
+        System.out.println("----------------------------");
+        System.out.println("Please input your option");
     }
 }
